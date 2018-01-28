@@ -1,0 +1,58 @@
+/**
+ __  __                          _           _       
+|  \/  | ___ _ __ _ __ ___   ___| | __ _  __| | __ _ 
+| |\/| |/ _ \ '__| '_ ` _ \ / _ \ |/ _` |/ _` |/ _` |
+| |  | |  __/ |  | | | | | |  __/ | (_| | (_| | (_| |
+|_|  |_|\___|_|  |_| |_| |_|\___|_|\__,_|\__,_|\__,_|
+                                                     
+*/
+// Modules Dependencies:
+//  - Mongoose (http://mongoosejs.com/docs/guide.html)
+//  
+var mongoose = require('mongoose'), 
+    Schema = mongoose.Schema,
+    ObjectId = Schema.Types.ObjectId;
+
+{{#each classes}}
+// {{class_title}} Model
+// -----------------------------
+var {{toLowerCase class_title}}Schema = new Schema({
+    {{#each attrs}}
+    {{title}} : {{type}}, 
+    {{/each}}
+	created : Date
+});
+
+// ### Hooks 
+// #### Pre-Save
+{{toLowerCase class_title}}Schema.pre("save", function(next) {
+    if(!this.created)
+        this.created = new Date();
+    next();
+});
+
+{{#each methods}}
+// ### Method: {{title}}
+{{toLowerCase ../class_title}}Schema.method("{{title}}", function(param, cb) {
+    var {{toLowerCase ../class_title}} = this;
+    this.save(cb);
+});
+{{/each}}
+
+{{#each statics}}
+// ### Static: {{title}}
+{{toLowerCase ../class_title}}Schema.statics.{{title}} = function (paramid, cb) {
+  var {{../class_title}} = this;
+  {{../class_title}}.findOne({ _id: paramid}, function(err, {{toLowerCase ../class_title}}){
+      cb(err, {{toLowerCase ../class_title}});
+  });
+}
+{{/each}}
+{{/each}}
+
+// Export module
+module.exports = {
+  {{#each classes}}
+    '{{class_title}}' : mongoose.model('{{class_title}}', {{toLowerCase class_title}}Schema){{#unless @last}},{{/unless}}
+  {{/each}}
+};

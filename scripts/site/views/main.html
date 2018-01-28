@@ -1,0 +1,33 @@
+<div class="col-sm-6">
+    <div ui-ace="{
+        onLoad: mermeladaLoaded,
+        onChange: mermeladaChanged }" ng-model="mermeladacode">
+    </div>
+</div>
+<div class="col-sm-6">
+    <div ui-ace="{
+        mode: 'javascript',
+        onLoad: resultjsLoaded,
+        onChange: resultjsChanged }" ng-model="resultjs"></div>
+</div>
+<div class="col-sm-12">
+  <div class="btns-wrapper pull-right">
+    <a class="btn btn-default" href="/docs">
+        <i class="fa fa-book"></i>
+        Read the docs
+    </a>
+    <button clipboard text="resultjs" class="btn btn-default" on-copied="sourceCopied()">
+        <i class="fa fa-clipboard fa-fw"></i>
+        Copy Source
+    </button>
+  </div>
+
+  <div class="prom-anyandgo">
+    <img src="./img/anyandgo-logo-circle-2.png" style="display:inline-block;height:24px;">
+    <div style="display:inline-block;padding-left:5px;font-size: 12px;">Proudly made with <a href="http://anyandgo.io/docs" target="_blank">Anyandgo.io</a></div>
+      <div class="github-control" style="padding-top: 5px">
+          <a href="https://github.com/cortezcristian/anyandgo" data-icon="octicon-star" data-style="mega" data-count-href="/cortezcristian/anyandgo/stargazers" data-count-api="/repos/cortezcristian/anyandgo#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star cortezcristian/anyandgo on GitHub" class="github-button">Star</a>
+
+      </div>
+  </div>
+</div>
